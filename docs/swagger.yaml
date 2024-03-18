@@ -1,0 +1,1679 @@
+basePath: /
+definitions:
+  domain.Account:
+    properties:
+      id:
+        type: integer
+      mail:
+        $ref: '#/definitions/domain.Account'
+      phone:
+        $ref: '#/definitions/domain.Phone'
+      site:
+        $ref: '#/definitions/domain.Site'
+      username:
+        minLength: 2
+        type: string
+    required:
+    - username
+    type: object
+  domain.AuthResponse:
+    properties:
+      accesstoken:
+        type: string
+      refreshtoken:
+        type: string
+      user:
+        $ref: '#/definitions/domain.User'
+    type: object
+  domain.Operator:
+    properties:
+      id:
+        type: integer
+      name:
+        minLength: 2
+        type: string
+    required:
+    - name
+    type: object
+  domain.Permissions:
+    properties:
+      profile_module:
+        type: boolean
+      user_module:
+        type: boolean
+    type: object
+  domain.Phone:
+    properties:
+      id:
+        type: integer
+      number:
+        minLength: 2
+        type: string
+      operator:
+        $ref: '#/definitions/domain.Operator'
+    required:
+    - number
+    type: object
+  domain.Profile:
+    properties:
+      id:
+        type: integer
+      name:
+        minLength: 4
+        type: string
+      permissions:
+        $ref: '#/definitions/domain.Permissions'
+    required:
+    - name
+    type: object
+  domain.Site:
+    properties:
+      id:
+        type: integer
+      name:
+        minLength: 2
+        type: string
+      url:
+        minLength: 2
+        type: string
+    required:
+    - name
+    - url
+    type: object
+  domain.TokensResponse:
+    properties:
+      accesstoken:
+        type: string
+      refreshtoken:
+        type: string
+    type: object
+  domain.User:
+    properties:
+      id:
+        type: integer
+      mail:
+        type: string
+      name:
+        minLength: 5
+        type: string
+      new:
+        type: boolean
+      profile:
+        $ref: '#/definitions/domain.Profile'
+      status:
+        type: boolean
+    required:
+    - mail
+    - name
+    type: object
+  dto.AccountInputDTO:
+    properties:
+      mail_id:
+        example: 1
+        type: integer
+      password:
+        example: secret
+        type: string
+      phone_id:
+        example: 1
+        type: integer
+      site_id:
+        example: 1
+        type: integer
+      username:
+        example: username
+        type: string
+    type: object
+  dto.ItemsOutputDTO:
+    properties:
+      count:
+        type: integer
+      items: {}
+    type: object
+  dto.LoginInputDTO:
+    properties:
+      email:
+        example: admin@admin.com
+        type: string
+      password:
+        example: "12345678"
+        type: string
+    type: object
+  dto.OperatorInputDTO:
+    properties:
+      name:
+        example: TIM
+        type: string
+    type: object
+  dto.PasswordInputDTO:
+    properties:
+      password:
+        example: secret
+        type: string
+      password_confirm:
+        example: secret
+        type: string
+    type: object
+  dto.PermissionsInputDTO:
+    properties:
+      profile_module:
+        example: true
+        type: boolean
+      user_module:
+        example: true
+        type: boolean
+    type: object
+  dto.PhoneInputDTO:
+    properties:
+      number:
+        example: TIM
+        type: string
+      operator_id:
+        example: 1
+        type: integer
+    type: object
+  dto.ProfileInputDTO:
+    properties:
+      name:
+        example: ADMIN
+        type: string
+      permissions:
+        $ref: '#/definitions/dto.PermissionsInputDTO'
+    type: object
+  dto.SiteInputDTO:
+    properties:
+      name:
+        example: Google
+        type: string
+      url:
+        example: https://www.google.com/
+        type: string
+    type: object
+  dto.UserInputDTO:
+    properties:
+      email:
+        example: john.cena@email.com
+        type: string
+      name:
+        example: John Cena
+        type: string
+      profile_id:
+        example: 1
+        type: integer
+      status:
+        example: true
+        type: boolean
+    type: object
+  httphelper.HTTPResponse:
+    properties:
+      code:
+        example: 400
+        type: integer
+      message:
+        example: status bad request
+        type: string
+    type: object
+info:
+  contact:
+    email: email@email.com
+    name: Raul del Aguila
+  description: Template API.
+  title: Go - Template API
+paths:
+  /:
+    get:
+      description: Ping Pong
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      summary: Ping Pong
+      tags:
+      - Ping
+  /account:
+    get:
+      consumes:
+      - application/json
+      description: Get accounts
+      parameters:
+      - description: Language responses
+        in: query
+        name: lang
+        type: string
+      - example: 10
+        in: query
+        name: limit
+        type: integer
+      - example: descending order 'desc' or ascending order 'asc'
+        in: query
+        name: order
+        type: string
+      - example: 1
+        in: query
+        name: page
+        type: integer
+      - example: name
+        in: query
+        name: search
+        type: string
+      - example: '''updated_at'', ''created_at'', ''name'' or some other field of
+          the response object'
+        in: query
+        name: sort
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/dto.ItemsOutputDTO'
+            type: array
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/httphelper.HTTPResponse'
+      security:
+      - Bearer: []
+      summary: Get accounts
+      tags:
+      - Account
+    post:
+      consumes:
+      - application/json
+      description: Insert account
+      parameters:
+      - description: Language responses
+        in: query
+        name: lang
+        type: string
+      - description: Account model
+        in: body
+        name: account
+        required: true
+        schema:
+          $ref: '#/definitions/dto.AccountInputDTO'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/domain.Account'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/httphelper.HTTPResponse'
+        "409":
+          description: Conflict
+          schema:
+            $ref: '#/definitions/httphelper.HTTPResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/httphelper.HTTPResponse'
+      security:
+      - Bearer: []
+      summary: Insert account
+      tags:
+      - Account
+  /account/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: Delete account by ID
+      parameters:
+      - description: Language responses
+        in: query
+        name: lang
+        type: string
+      - description: Account ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "204":
+          description: No Content
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/httphelper.HTTPResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/httphelper.HTTPResponse'
+      security:
+      - Bearer: []
+      summary: Delete account by ID
+      tags:
+      - Account
+    get:
+      consumes:
+      - application/json
+      description: Get account by ID
+      parameters:
+      - description: Language responses
+        in: query
+        name: lang
+        type: string
+      - description: Account ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/domain.Account'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/httphelper.HTTPResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/httphelper.HTTPResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/httphelper.HTTPResponse'
+      security:
+      - Bearer: []
+      summary: Get account by ID
+      tags:
+      - Account
+    put:
+      consumes:
+      - application/json
+      description: Update account by ID
+      parameters:
+      - description: Language responses
+        in: query
+        name: lang
+        type: string
+      - description: Account ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: Account model
+        in: body
+        name: account
+        required: true
+        schema:
+          $ref: '#/definitions/dto.AccountInputDTO'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/domain.Account'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/httphelper.HTTPResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/httphelper.HTTPResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/httphelper.HTTPResponse'
+      security:
+      - Bearer: []
+      summary: Update account by ID
+      tags:
+      - Account
+  /account/{id}/pass:
+    get:
+      consumes:
+      - application/json
+      description: Get password account by ID
+      parameters:
+      - description: Language responses
+        in: query
+        name: lang
+        type: string
+      - description: Account ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/httphelper.HTTPResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/httphelper.HTTPResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/httphelper.HTTPResponse'
+      security:
+      - Bearer: []
+      summary: Get password account by ID
+      tags:
+      - Account
+  /auth:
+    get:
+      consumes:
+      - application/json
+      description: User authenticated
+      parameters:
+      - description: User token
+        in: header
+        name: Authorization
+        type: string
+      - description: Language responses
+        in: query
+        name: lang
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/domain.User'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/httphelper.HTTPResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/httphelper.HTTPResponse'
+      security:
+      - Bearer: []
+      summary: User authenticated
+      tags:
+      - Auth
+    post:
+      consumes:
+      - application/json
+      description: User authentication
+      parameters:
+      - description: Language responses
+        in: query
+        name: lang
+        type: string
+      - description: Credentials model
+        in: body
+        name: credentials
+        required: true
+        schema:
+          $ref: '#/definitions/dto.LoginInputDTO'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/domain.AuthResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/httphelper.HTTPResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/httphelper.HTTPResponse'
+      summary: User authentication
+      tags:
+      - Auth
+    put:
+      consumes:
+      - application/json
+      description: User refresh
+      parameters:
+      - description: User token
+        in: header
+        name: Authorization
+        type: string
+      - description: Language responses
+        in: query
+        name: lang
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/domain.TokensResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/httphelper.HTTPResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/httphelper.HTTPResponse'
+      summary: User refresh
+      tags:
+      - Auth
+  /operator:
+    get:
+      consumes:
+      - application/json
+      description: Get operators
+      parameters:
+      - description: Language responses
+        in: query
+        name: lang
+        type: string
+      - example: 10
+        in: query
+        name: limit
+        type: integer
+      - example: descending order 'desc' or ascending order 'asc'
+        in: query
+        name: order
+        type: string
+      - example: 1
+        in: query
+        name: page
+        type: integer
+      - example: name
+        in: query
+        name: search
+        type: string
+      - example: '''updated_at'', ''created_at'', ''name'' or some other field of
+          the response object'
+        in: query
+        name: sort
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/dto.ItemsOutputDTO'
+            type: array
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/httphelper.HTTPResponse'
+      security:
+      - Bearer: []
+      summary: Get operators
+      tags:
+      - Operator
+    post:
+      consumes:
+      - application/json
+      description: Insert operator
+      parameters:
+      - description: Language responses
+        in: query
+        name: lang
+        type: string
+      - description: Operator model
+        in: body
+        name: operator
+        required: true
+        schema:
+          $ref: '#/definitions/dto.OperatorInputDTO'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/domain.Operator'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/httphelper.HTTPResponse'
+        "409":
+          description: Conflict
+          schema:
+            $ref: '#/definitions/httphelper.HTTPResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/httphelper.HTTPResponse'
+      security:
+      - Bearer: []
+      summary: Insert operator
+      tags:
+      - Operator
+  /operator/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: Delete operator by ID
+      parameters:
+      - description: Language responses
+        in: query
+        name: lang
+        type: string
+      - description: Operator ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "204":
+          description: No Content
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/httphelper.HTTPResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/httphelper.HTTPResponse'
+      security:
+      - Bearer: []
+      summary: Delete operator by ID
+      tags:
+      - Operator
+    get:
+      consumes:
+      - application/json
+      description: Get operator by ID
+      parameters:
+      - description: Language responses
+        in: query
+        name: lang
+        type: string
+      - description: Operator ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/domain.Operator'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/httphelper.HTTPResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/httphelper.HTTPResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/httphelper.HTTPResponse'
+      security:
+      - Bearer: []
+      summary: Get operator by ID
+      tags:
+      - Operator
+    put:
+      consumes:
+      - application/json
+      description: Update operator by ID
+      parameters:
+      - description: Language responses
+        in: query
+        name: lang
+        type: string
+      - description: Operator ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: Operator model
+        in: body
+        name: operator
+        required: true
+        schema:
+          $ref: '#/definitions/dto.OperatorInputDTO'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/domain.Operator'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/httphelper.HTTPResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/httphelper.HTTPResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/httphelper.HTTPResponse'
+      security:
+      - Bearer: []
+      summary: Update operator by ID
+      tags:
+      - Operator
+  /phone:
+    get:
+      consumes:
+      - application/json
+      description: Get phones
+      parameters:
+      - description: Language responses
+        in: query
+        name: lang
+        type: string
+      - example: 10
+        in: query
+        name: limit
+        type: integer
+      - example: descending order 'desc' or ascending order 'asc'
+        in: query
+        name: order
+        type: string
+      - example: 1
+        in: query
+        name: page
+        type: integer
+      - example: name
+        in: query
+        name: search
+        type: string
+      - example: '''updated_at'', ''created_at'', ''name'' or some other field of
+          the response object'
+        in: query
+        name: sort
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/dto.ItemsOutputDTO'
+            type: array
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/httphelper.HTTPResponse'
+      security:
+      - Bearer: []
+      summary: Get phones
+      tags:
+      - Phone
+    post:
+      consumes:
+      - application/json
+      description: Insert phone
+      parameters:
+      - description: Language responses
+        in: query
+        name: lang
+        type: string
+      - description: Phone model
+        in: body
+        name: phone
+        required: true
+        schema:
+          $ref: '#/definitions/dto.PhoneInputDTO'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/domain.Phone'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/httphelper.HTTPResponse'
+        "409":
+          description: Conflict
+          schema:
+            $ref: '#/definitions/httphelper.HTTPResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/httphelper.HTTPResponse'
+      security:
+      - Bearer: []
+      summary: Insert phone
+      tags:
+      - Phone
+  /phone/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: Delete phone by ID
+      parameters:
+      - description: Language responses
+        in: query
+        name: lang
+        type: string
+      - description: Phone ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "204":
+          description: No Content
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/httphelper.HTTPResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/httphelper.HTTPResponse'
+      security:
+      - Bearer: []
+      summary: Delete phone by ID
+      tags:
+      - Phone
+    get:
+      consumes:
+      - application/json
+      description: Get phone by ID
+      parameters:
+      - description: Language responses
+        in: query
+        name: lang
+        type: string
+      - description: Phone ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/domain.Phone'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/httphelper.HTTPResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/httphelper.HTTPResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/httphelper.HTTPResponse'
+      security:
+      - Bearer: []
+      summary: Get phone by ID
+      tags:
+      - Phone
+    put:
+      consumes:
+      - application/json
+      description: Update phone by ID
+      parameters:
+      - description: Language responses
+        in: query
+        name: lang
+        type: string
+      - description: Phone ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: Phone model
+        in: body
+        name: phone
+        required: true
+        schema:
+          $ref: '#/definitions/dto.PhoneInputDTO'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/domain.Phone'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/httphelper.HTTPResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/httphelper.HTTPResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/httphelper.HTTPResponse'
+      security:
+      - Bearer: []
+      summary: Update phone by ID
+      tags:
+      - Phone
+  /profile:
+    get:
+      consumes:
+      - application/json
+      description: Get profiles
+      parameters:
+      - description: Language responses
+        in: query
+        name: lang
+        type: string
+      - example: 10
+        in: query
+        name: limit
+        type: integer
+      - example: descending order 'desc' or ascending order 'asc'
+        in: query
+        name: order
+        type: string
+      - example: 1
+        in: query
+        name: page
+        type: integer
+      - example: name
+        in: query
+        name: search
+        type: string
+      - example: '''updated_at'', ''created_at'', ''name'' or some other field of
+          the response object'
+        in: query
+        name: sort
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/dto.ItemsOutputDTO'
+            type: array
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/httphelper.HTTPResponse'
+      security:
+      - Bearer: []
+      summary: Get profiles
+      tags:
+      - Profile
+    post:
+      consumes:
+      - application/json
+      description: Insert profile
+      parameters:
+      - description: Language responses
+        in: query
+        name: lang
+        type: string
+      - description: Profile model
+        in: body
+        name: profile
+        required: true
+        schema:
+          $ref: '#/definitions/dto.ProfileInputDTO'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/domain.Profile'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/httphelper.HTTPResponse'
+        "409":
+          description: Conflict
+          schema:
+            $ref: '#/definitions/httphelper.HTTPResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/httphelper.HTTPResponse'
+      security:
+      - Bearer: []
+      summary: Insert profile
+      tags:
+      - Profile
+  /profile/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: Delete profile by ID
+      parameters:
+      - description: Language responses
+        in: query
+        name: lang
+        type: string
+      - description: Profile ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "204":
+          description: No Content
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/httphelper.HTTPResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/httphelper.HTTPResponse'
+      security:
+      - Bearer: []
+      summary: Delete profile
+      tags:
+      - Profile
+    get:
+      consumes:
+      - application/json
+      description: Get profile by ID
+      parameters:
+      - description: Language responses
+        in: query
+        name: lang
+        type: string
+      - description: Profile ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/domain.Profile'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/httphelper.HTTPResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/httphelper.HTTPResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/httphelper.HTTPResponse'
+      security:
+      - Bearer: []
+      summary: Get profile by ID
+      tags:
+      - Profile
+    put:
+      consumes:
+      - application/json
+      description: Update profile by ID
+      parameters:
+      - description: Language responses
+        in: query
+        name: lang
+        type: string
+      - description: Profile ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: Profile model
+        in: body
+        name: profile
+        required: true
+        schema:
+          $ref: '#/definitions/dto.ProfileInputDTO'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/domain.Profile'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/httphelper.HTTPResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/httphelper.HTTPResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/httphelper.HTTPResponse'
+      security:
+      - Bearer: []
+      summary: Update profile
+      tags:
+      - Profile
+  /site:
+    get:
+      consumes:
+      - application/json
+      description: Get sites
+      parameters:
+      - description: Language responses
+        in: query
+        name: lang
+        type: string
+      - example: 10
+        in: query
+        name: limit
+        type: integer
+      - example: descending order 'desc' or ascending order 'asc'
+        in: query
+        name: order
+        type: string
+      - example: 1
+        in: query
+        name: page
+        type: integer
+      - example: name
+        in: query
+        name: search
+        type: string
+      - example: '''updated_at'', ''created_at'', ''name'' or some other field of
+          the response object'
+        in: query
+        name: sort
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/dto.ItemsOutputDTO'
+            type: array
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/httphelper.HTTPResponse'
+      security:
+      - Bearer: []
+      summary: Get sites
+      tags:
+      - Site
+    post:
+      consumes:
+      - application/json
+      description: Insert site
+      parameters:
+      - description: Language responses
+        in: query
+        name: lang
+        type: string
+      - description: Site model
+        in: body
+        name: site
+        required: true
+        schema:
+          $ref: '#/definitions/dto.SiteInputDTO'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/domain.Site'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/httphelper.HTTPResponse'
+        "409":
+          description: Conflict
+          schema:
+            $ref: '#/definitions/httphelper.HTTPResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/httphelper.HTTPResponse'
+      security:
+      - Bearer: []
+      summary: Insert site
+      tags:
+      - Site
+  /site/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: Delete site by ID
+      parameters:
+      - description: Language responses
+        in: query
+        name: lang
+        type: string
+      - description: Site ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "204":
+          description: No Content
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/httphelper.HTTPResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/httphelper.HTTPResponse'
+      security:
+      - Bearer: []
+      summary: Delete site by ID
+      tags:
+      - Site
+    get:
+      consumes:
+      - application/json
+      description: Get site by ID
+      parameters:
+      - description: Language responses
+        in: query
+        name: lang
+        type: string
+      - description: Site ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/domain.Site'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/httphelper.HTTPResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/httphelper.HTTPResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/httphelper.HTTPResponse'
+      security:
+      - Bearer: []
+      summary: Get site by ID
+      tags:
+      - Site
+    put:
+      consumes:
+      - application/json
+      description: Update site by ID
+      parameters:
+      - description: Language responses
+        in: query
+        name: lang
+        type: string
+      - description: Site ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: Site model
+        in: body
+        name: site
+        required: true
+        schema:
+          $ref: '#/definitions/dto.SiteInputDTO'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/domain.Site'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/httphelper.HTTPResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/httphelper.HTTPResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/httphelper.HTTPResponse'
+      security:
+      - Bearer: []
+      summary: Update site by ID
+      tags:
+      - Site
+  /user:
+    get:
+      consumes:
+      - application/json
+      description: Get all users
+      parameters:
+      - description: Language responses
+        in: query
+        name: lang
+        type: string
+      - example: 10
+        in: query
+        name: limit
+        type: integer
+      - example: descending order 'desc' or ascending order 'asc'
+        in: query
+        name: order
+        type: string
+      - example: 1
+        in: query
+        name: page
+        type: integer
+      - example: 1
+        in: query
+        name: profile_id
+        type: integer
+      - example: name
+        in: query
+        name: search
+        type: string
+      - example: '''updated_at'', ''created_at'', ''name'' or some other field of
+          the response object'
+        in: query
+        name: sort
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/dto.ItemsOutputDTO'
+            type: array
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/httphelper.HTTPResponse'
+      security:
+      - Bearer: []
+      summary: Get users
+      tags:
+      - User
+    post:
+      consumes:
+      - application/json
+      description: Insert user
+      parameters:
+      - description: Language responses
+        in: query
+        name: lang
+        type: string
+      - description: User model
+        in: body
+        name: user
+        required: true
+        schema:
+          $ref: '#/definitions/dto.UserInputDTO'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/domain.User'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/httphelper.HTTPResponse'
+        "409":
+          description: Conflict
+          schema:
+            $ref: '#/definitions/httphelper.HTTPResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/httphelper.HTTPResponse'
+      security:
+      - Bearer: []
+      summary: Insert user
+      tags:
+      - User
+  /user/{email}/passw:
+    patch:
+      consumes:
+      - application/json
+      description: Set user password by ID
+      parameters:
+      - description: Language responses
+        in: query
+        name: lang
+        type: string
+      - description: User email
+        in: path
+        name: email
+        required: true
+        type: string
+      - description: Password model
+        in: body
+        name: password
+        required: true
+        schema:
+          $ref: '#/definitions/dto.PasswordInputDTO'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/domain.User'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/httphelper.HTTPResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/httphelper.HTTPResponse'
+      summary: Set user password
+      tags:
+      - User
+  /user/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: Delete user by ID
+      parameters:
+      - description: Language responses
+        in: query
+        name: lang
+        type: string
+      - description: User ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "204":
+          description: No Content
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/httphelper.HTTPResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/httphelper.HTTPResponse'
+      security:
+      - Bearer: []
+      summary: Delete user
+      tags:
+      - User
+    get:
+      consumes:
+      - application/json
+      description: Get user by ID
+      parameters:
+      - description: Language responses
+        in: query
+        name: lang
+        type: string
+      - description: User ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/domain.User'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/httphelper.HTTPResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/httphelper.HTTPResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/httphelper.HTTPResponse'
+      security:
+      - Bearer: []
+      summary: Get user
+      tags:
+      - User
+    put:
+      consumes:
+      - application/json
+      description: Update user by ID
+      parameters:
+      - description: Language responses
+        in: query
+        name: lang
+        type: string
+      - description: User ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: User model
+        in: body
+        name: user
+        required: true
+        schema:
+          $ref: '#/definitions/dto.UserInputDTO'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/domain.User'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/httphelper.HTTPResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/httphelper.HTTPResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/httphelper.HTTPResponse'
+      security:
+      - Bearer: []
+      summary: Update user
+      tags:
+      - User
+  /user/{id}/reset:
+    patch:
+      consumes:
+      - application/json
+      description: Reset user password by ID
+      parameters:
+      - description: Language responses
+        in: query
+        name: lang
+        type: string
+      - description: User ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/domain.User'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/httphelper.HTTPResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/httphelper.HTTPResponse'
+      security:
+      - Bearer: []
+      summary: Reset user password
+      tags:
+      - User
+securityDefinitions:
+  Bearer:
+    description: Type "Bearer" followed by a space and JWT token.
+    in: header
+    name: Authorization
+    type: apiKey
+swagger: "2.0"

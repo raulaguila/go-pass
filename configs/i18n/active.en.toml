@@ -1,0 +1,119 @@
+[ErrAccountNotFound]
+one = "Account not found."
+other = "Account not found."
+
+[ErrAccountRegistered]
+one = "Account already registered."
+other = "Account already registered."
+
+[ErrAccountUsed]
+one = "Account is being used."
+other = "Account is being used."
+
+[ErrDisabledUser]
+one = "Disabled user."
+other = "Disabled user."
+
+[ErrExpiredToken]
+one = "Expired token."
+other = "Expired token."
+
+[ErrGeneric]
+one = "An unexpected error occurred, try again later."
+other = "An unexpected error occurred, try again later."
+
+[ErrIncorrectPassword]
+one = "Incorrect password."
+other = "Incorrect password."
+
+[ErrInvalidDatas]
+one = "Invalid data, please specify valid data."
+other = "Invalid data, please specify valid data."
+
+[ErrInvalidId]
+one = "Invalid ID, please specify a valid ID."
+other = "Invalid ID, please specify a valid ID."
+
+[ErrInvalidIpAssociation]
+one = "Invalid token ip."
+other = "Invalid token ip."
+
+[ErrManyRequest]
+one = "You have completed many requests in a short period of time! Please wait a minute!"
+other = "You have completed many requests in a short period of time! Please wait a minute!"
+
+[ErrOperatorNotFound]
+one = "Operator not found."
+other = "Operator not found."
+
+[ErrOperatorRegistered]
+one = "Operator already registered."
+other = "Operator already registered."
+
+[ErrOperatorUsed]
+one = "Operator is being used."
+other = "Operator is being used."
+
+[ErrPassUnmatch]
+one = "Passwords does not match."
+other = "Passwords does not match."
+
+[ErrPhoneNotFound]
+one = "Phone not found."
+other = "Phone not found."
+
+[ErrPhoneRegistered]
+one = "Phone already registered."
+other = "Phone already registered."
+
+[ErrPhoneUsed]
+one = "Phone is being used."
+other = "Phone is being used."
+
+[ErrProfileNotFound]
+one = "Profile not found."
+other = "Profile not found."
+
+[ErrProfileRegistered]
+one = "Profile already registered."
+other = "Profile already registered."
+
+[ErrProfileUsed]
+one = "Profile is being used."
+other = "Profile is being used."
+
+[ErrSiteNotFound]
+one = "Site not found."
+other = "Site not found."
+
+[ErrSiteRegistered]
+one = "Site already registered."
+other = "Site already registered."
+
+[ErrSiteUsed]
+one = "Site is being used."
+other = "Site is being used."
+
+[ErrUndefinedColumn]
+one = "Undefined column or parameter name."
+other = "Undefined column or parameter name."
+
+[ErrUserHasPass]
+one = "User already has registered password."
+other = "User already has registered password."
+
+[ErrUserNotFound]
+one = "User not found."
+other = "User not found."
+
+[ErrUserRegistered]
+one = "User already registered."
+other = "User already registered."
+
+[ErrUserUsed]
+one = "User is being used."
+other = "User is being used."
+
+[ErrorNonexistentRoute]
+one = "Route does not exist in this API."
+other = "Route does not exist in this API."

@@ -1,0 +1,149 @@
+[ErrAccountNotFound]
+hash = "sha1-a1c3588e2d1763641fdf8d9beb6538e4db8eb362"
+one = "Conta não encontrada."
+other = "Conta não encontrada."
+
+[ErrAccountRegistered]
+hash = "sha1-584fc962e2c1f6689e39dde108f86ddaff8e0d40"
+one = "Conta já cadastrada."
+other = "Conta já cadastrada."
+
+[ErrAccountUsed]
+hash = "sha1-64430f946c869d858dd36ca1453b9379233ccf1d"
+one = "Conta em uso."
+other = "Conta em uso."
+
+[ErrDisabledUser]
+hash = "sha1-6f92619e8df68b181a32786b61671c4259b7d080"
+one = "Usuário desativado."
+other = "Usuário desativado."
+
+[ErrExpiredToken]
+hash = "sha1-27353fa6a50e456a6769a32a440de65d200e1507"
+one = "Token expirado."
+other = "Token expirado."
+
+[ErrGeneric]
+hash = "sha1-24a4639a3e12cc1b2eac4f2600e82ca022d92a26"
+one = "Um erro inesperado ocorreu, tente novamente mais tarde."
+other = "Um erro inesperado ocorreu, tente novamente mais tarde."
+
+[ErrIncorrectPassword]
+hash = "sha1-b68db3d03e769e4b1f60295b95dcb0e697fe4042"
+one = "Senha incorreta."
+other = "Senha incorreta."
+
+[ErrInvalidDatas]
+hash = "sha1-30840e0fbca47eacbec2e3779f5e7dc09892a524"
+one = "Dados inválidos, especifique dados válidos."
+other = "Dados inválidos, especifique dados válidos."
+
+[ErrInvalidId]
+hash = "sha1-89fb55dd5eefd1dfc0adacc69ef259fb86909cab"
+one = "ID inválido, especifique um ID válido."
+other = "ID inválido, especifique um ID válido."
+
+[ErrInvalidIpAssociation]
+hash = "sha1-c2b908e9792a2bee4f64a69c12a9f9bcc42d0592"
+one = "IP do token inválido."
+other = "IP do token inválido."
+
+[ErrManyRequest]
+hash = "sha1-f7ff8b8f8b7ea58a73ce86ed0c217ac9a392c903"
+one = "Você completou muitas solicitações em um curto período de tempo! Por favor, espere um minuto!"
+other = "Você completou muitas solicitações em um curto período de tempo! Por favor, espere um minuto!"
+
+[ErrOperatorNotFound]
+hash = "sha1-ffccf5b9cd4889f369ab2568e722cf184ef7870c"
+one = "Operadora não encontrada."
+other = "Operadora não encontrada."
+
+[ErrOperatorRegistered]
+hash = "sha1-06ceb746182468f57cdd8dcdd39414baffe60c53"
+one = "Operadora já cadastrada."
+other = "Operadora já cadastrada."
+
+[ErrOperatorUsed]
+hash = "sha1-e98f2882ba8e3b699b0ec6ed13464ea34e4714db"
+one = "Operadora em uso."
+other = "Operadora em uso."
+
+[ErrPassUnmatch]
+hash = "sha1-33ac6adb3b5f5f0392f6b725e61f7d7b30dc59c4"
+one = "As senhas não correspondem."
+other = "As senhas não correspondem."
+
+[ErrPhoneNotFound]
+hash = "sha1-2c944cff8123b9a64d3960df082e0296c60207f0"
+one = "Telefone não encontrado."
+other = "Telefone não encontrado."
+
+[ErrPhoneRegistered]
+hash = "sha1-a83f9933dff9693eabebf07b676238cad71c0ed8"
+one = "Telefone já cadastrado."
+other = "Telefone já cadastrado."
+
+[ErrPhoneUsed]
+hash = "sha1-bdc514ef93a796aa3914b2ebc9bbadc1f79e9b94"
+one = "Telefone em uso."
+other = "Telefone em uso."
+
+[ErrProfileNotFound]
+hash = "sha1-3edd089cfb2f27c8ceefa6df25f841b0de9a904a"
+one = "Perfil não encontrado."
+other = "Perfil não encontrado."
+
+[ErrProfileRegistered]
+hash = "sha1-d186f4b958b29ecbbd5e80a242341e0f4361a869"
+one = "Perfil já registrado."
+other = "Perfil já registrado."
+
+[ErrProfileUsed]
+hash = "sha1-2a09ef6c0ce1e7c4210957af3006a18321ee8ff0"
+one = "Perfil em uso."
+other = "Perfil em uso."
+
+[ErrSiteNotFound]
+hash = "sha1-1804eceaac8eb931b8a688128da5068b209873f4"
+one = "Site não encontrado."
+other = "Site não encontrado."
+
+[ErrSiteRegistered]
+hash = "sha1-f7ff89cfcee542f3722a7f615764dc5f931681a0"
+one = "Site já cadastrado."
+other = "Site já cadastrado."
+
+[ErrSiteUsed]
+hash = "sha1-b0254ef0196374b3ae7572ac47387e4eb908e447"
+one = "Site em uso."
+other = "Site em uso."
+
+[ErrUndefinedColumn]
+hash = "sha1-47646231c538e1513f443c841c96cd9aaa3d0eb9"
+one = "Coluna ou nome de parâmetro indefinido."
+other = "Coluna ou nome de parâmetro indefinido."
+
+[ErrUserHasPass]
+hash = "sha1-1675a153ae7467c3fbb75f1faf28337e99ff2234"
+one = "Usuário já possui senha cadastrada."
+other = "Usuário já possui senha cadastrada."
+
+[ErrUserNotFound]
+hash = "sha1-9c986a39aaffc5e0efbc76c73d7d9ddd22203d56"
+one = "Usuário não encontrado."
+other = "Usuário não encontrado."
+
+[ErrUserRegistered]
+hash = "sha1-920a2d594d6d4bc5001f78221ec3cb1a82d669b0"
+one = "Usuário já registrado."
+other = "Usuário já registrado."
+
+[ErrUserUsed]
+hash = "sha1-255f5135de848ae5704d90f6bf9d6669a9f6ed65"
+one = "Usuário em uso."
+other = "Usuário em uso."
+
+[ErrorNonexistentRoute]
+hash = "sha1-4c182723e22c09e0c90fddbffe7780bf7d0cc4f1"
+one = "A rota não existe nesta API."
+other = "A rota não existe nesta API."
