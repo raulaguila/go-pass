@@ -26,6 +26,7 @@ type (
 	LoginInputDTO struct {
 		Email    string `json:"email" example:"admin@admin.com"`
 		Password string `json:"password" example:"12345678"`
+		Expire   bool   `json:"expire" example:"false"`
 	}
 
 	// Accounts example

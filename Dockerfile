@@ -1,20 +1,4 @@
-FROM golang:1.22 AS build
-
-# Set the Current Working Directory inside the container
-WORKDIR /app
-
-# Copy folders and files to build image
-COPY . .
-
-# Build application
-RUN CGO_ENABLED=0 go build -ldflags "-w -s" -o bin/backend cmd/go-pass/go-pass.go
-
-# Update swagger documentation
-# RUN go install github.com/swaggo/swag/cmd/swag
-# RUN swag init -g cmd/go-pass/go-pass.go
-
-
-FROM alpine:3.18.4 AS final
+FROM alpine:3.18.4
 
 RUN apk add --no-cache bash
 RUN apk add --no-cache tzdata
@@ -23,9 +7,8 @@ RUN apk add --no-cache dumb-init
 WORKDIR /app
 
 # Copy files to final image
-COPY --from=build /app/bin/backend .
-COPY --from=build /app/configs/.env ./configs/
-COPY --from=build /app/configs/i18n/active.*.toml ./configs/i18n/
+COPY configs/.env configs/.env
+COPY backend .
 
 ENTRYPOINT [ "/usr/bin/dumb-init", "--" ]
 

@@ -20,9 +20,10 @@
   </a>
 </p>
 
-## Requirements/dependencies
+## Requirements
 
---
+- Docker
+- Docker compose
 
 ## Getting Started
 
@@ -30,32 +31,28 @@
 
 ```sh
 Usage:
-        make [COMMAND]
-        make help
+      make [COMMAND]
+      make help
 
 Commands:
 
 help                           Display help screen
 init                           Create environment variables
+build                          Build the application from source code
 compose-up                     Run docker compose up for create and start containers
-compose-build                  Run docker compose up build for create and start containers
-compose-down                   Run docker compose down for stopping and removing containers, networks
-compose-remove                 Run docker compose down for stopping and removing containers, networks, volumes
+compose-build                  Run docker compose up --build for create and start containers
+compose-down                   Run docker compose down for stopping and removing containers and networks
+compose-remove                 Run docker compose down for stopping and removing containers, networks and volumes
 compose-exec                   Run docker compose exec to access bash container
 compose-log                    Run docker compose logs to show logger container
 compose-top                    Run docker compose top to display the running containers processes
-go-fmt                         Run go fmt
-go-vet                         Run go vet
-go-test                        Run go test
-go-test-cover                  Run go test with coverage report
-go-test-cover-html             Run go test with HTML coverage report
 ```
+- Run project
 
-- Build and run project
-
+1. Download and extract the latest build [release](https://github.com/raulaguila/go-pass/releases)
+1. Open the terminal in the release folder
+1. Run:
 ```sh
-make init
-# Change db authentication parameters in `.env` file created on `/configs`
 make compose-build
 ```
 
@@ -76,7 +73,7 @@ make compose-remove
 ## Contributors
 
 <a href="https://github.com/raulaguila" target="_blank">
-  <img src="https://contrib.rocks/image?repo=raulaguila/go-template">
+  <img src="https://contrib.rocks/image?repo=raulaguila/go-pass">
 </a>
 
 ## License

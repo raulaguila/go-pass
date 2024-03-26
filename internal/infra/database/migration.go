@@ -25,23 +25,37 @@ func autoMigrate(postgresdb *gorm.DB) {
 }
 
 func createDefaults(postgresdb *gorm.DB) {
-	profile := &domain.Profile{
-		Name: "ROOT",
-		Permissions: domain.Permissions{
-			UserModule:    true,
-			ProfileModule: true,
+	profiles := []domain.Profile{
+		{
+			Name: "ROOT",
+			Permissions: domain.Permissions{
+				UserModule:    true,
+				ProfileModule: true,
+			},
+		}, {
+			Name: "USER",
+			Permissions: domain.Permissions{
+				UserModule:    false,
+				ProfileModule: false,
+			},
 		},
 	}
 
 	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
 	defer cancel()
-	helpers.PanicIfErr(postgresdb.WithContext(ctx).FirstOrCreate(profile, "name = ?", profile.Name).Error)
+	var profileID uint = 0
+	for i, profile := range profiles {
+		helpers.PanicIfErr(postgresdb.WithContext(ctx).FirstOrCreate(&profile, "name = ?", profile.Name).Error)
+		if i == 0 {
+			profileID = profile.Id
+		}
+	}
 
 	user := &domain.User{
 		Name:      os.Getenv("ADM_NAME"),
 		Email:     os.Getenv("ADM_MAIL"),
 		Status:    true,
-		ProfileID: profile.Id,
+		ProfileID: profileID,
 		New:       false,
 		Token:     new(string),
 		Password:  new(string),
